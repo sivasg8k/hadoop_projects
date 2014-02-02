@@ -35,7 +35,7 @@ public class AdultsDataImport extends Configured implements Tool {
             String rowKeyStr = null;
             
             if(elems.length > 3) {
-            	rowKeyStr = elems[0] + "-" + elems[3] + "-" + num;
+            	rowKeyStr = elems[0].trim() + "-" + elems[3].trim() + "-" + num;
             } else {
             	rowKeyStr = "" + num;
             	
