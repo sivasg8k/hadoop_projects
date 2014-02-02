@@ -32,9 +32,15 @@ public class AdultsDataImport extends Configured implements Tool {
             String line = value.toString();
             String[] elems = line.split(",");
             num++;
-            String rowKeyStr = elems[0] + "-" + elems[3] + "-" + num;
-            rowKey.set(rowKeyStr);
+            String rowKeyStr = null;
             
+            if(elems.length > 3) {
+            	rowKeyStr = elems[0] + "-" + elems[3] + "-" + num;
+            } else {
+            	rowKeyStr = "" + num;
+            	
+            }
+            rowKey.set(rowKeyStr);
             context.write(rowKey,value);
            
         }
