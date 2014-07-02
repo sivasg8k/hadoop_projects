@@ -8,11 +8,13 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
-import org.apache.hadoop.mapreduce.Mapper.Context;
+
+import org.apache.hadoop.mapred.lib.IdentityReducer;
+import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
@@ -55,12 +57,13 @@ public class WordCount extends Configured implements Tool {
 		job.setJarByClass(WordCount.class);
 		job.setJobName("wordcountJ1");
 	   
-	    job.setOutputKeyClass(Text.class);
-	    job.setOutputValueClass(IntWritable.class);
+	    job.setOutputKeyClass(LongWritable.class);
+	    job.setOutputValueClass(Text.class);
 	   
-	    job.setMapperClass(WordCountMap.class);
-	    job.setCombinerClass(WordCountReducer.class);
-	    job.setReducerClass(WordCountReducer.class);
+	    job.setMapperClass(Mapper.class);
+	  //  job.setCombinerClass(WordCountReducer.class);
+	    //job.setReducerClass(Ide.class);
+	    job.setNumReduceTasks(0);
 	   
 	   
 	    job.setInputFormatClass(TextInputFormat.class);
