@@ -58,18 +58,21 @@ public class BookCounter extends Configured implements Tool {
 	   
 	    job.setOutputKeyClass(Text.class);
 	    job.setOutputValueClass(IntWritable.class);
+	    
+	    job.setMapOutputKeyClass(Text.class);
+	    job.setMapOutputValueClass(IntWritable.class);
 	   
 	    job.setMapperClass(BookCounterMap.class);
 	  //  job.setCombinerClass(AnagramCounterReducer.class);
 	    job.setReducerClass(BookCounterReducer.class);
-	   
+	    
 	   
 	    job.setInputFormatClass(TextInputFormat.class);
-	    job.setOutputFormatClass(TextOutputFormat.class);
+	    job.setOutputFormatClass(FileOutputFormat.class);
 	   
 	   
-	    FileInputFormat.setInputPaths(job, new Path(args[0]));
-		FileOutputFormat.setOutputPath(job, new Path(args[1]));
+	    TextInputFormat.setInputPaths(job, new Path(args[0]));
+	    FileOutputFormat.setOutputPath(job, new Path(args[1]));
 	   
 	    boolean success = job.waitForCompletion(true);
 	    return success ? 0: 1;
