@@ -7,24 +7,43 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.fs.PathFilter;
+import org.apache.hadoop.fs.FileSystem;
+import java.io.IOException;
 
 public class FileFilter extends Configured implements PathFilter {
-	
-	Pattern pattern;
-	Configuration conf;
-
-	@Override
-	public boolean accept(Path path) {
-
-		Matcher m = pattern.matcher(path.toString());
-		
-		return m.matches();
-	}
-	
-	@Override
+    Pattern pattern;
+    Configuration conf;
+    FileSystem fs;
+ 
+    @Override
+    public boolean accept(Path path) {
+ 
+        try {
+            if (fs.isDirectory(path)) {
+                return true;
+            } else {
+                Matcher m = pattern.matcher(path.toString());
+                System.out.println("Is path : " + path.toString() + " matches "
+                        + conf.get("file.pattern") + " ? , " + m.matches());
+                return m.matches();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+ 
+    }
+ 
+    @Override
     public void setConf(Configuration conf) {
         this.conf = conf;
-        pattern = Pattern.compile(conf.get("file.pattern"));
+        if (conf != null) {
+            try {
+                fs = FileSystem.get(conf);
+                pattern = Pattern.compile(conf.get("file.pattern"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
-
 }
