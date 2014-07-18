@@ -53,6 +53,7 @@ public class WordCount extends Configured implements Tool {
 		// TODO Auto-generated method stub
 		
 		Configuration conf = getConf();
+		conf.set("file.pattern", ".*ppp.*");
 		conf.set("mapred.input.dir.recursive", "true");
 		
 		Job job = new Job(conf);

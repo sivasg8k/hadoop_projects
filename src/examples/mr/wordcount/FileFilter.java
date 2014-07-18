@@ -12,7 +12,7 @@ public class FileFilter extends Configured implements PathFilter {
 	
 	Pattern pattern;
 	Configuration conf;
-
+	
 	@Override
 	public boolean accept(Path path) {
 
@@ -23,8 +23,8 @@ public class FileFilter extends Configured implements PathFilter {
 	
 	@Override
     public void setConf(Configuration conf) {
-        this.conf = conf;
-        pattern = Pattern.compile(conf.get("file.pattern"));
+        
+        pattern = Pattern.compile(this.conf.get("file.pattern"));
     }
 
 }
