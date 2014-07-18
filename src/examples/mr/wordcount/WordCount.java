@@ -55,6 +55,7 @@ public class WordCount extends Configured implements Tool {
 		Configuration conf = getConf();
 		//conf.set("mapred.input.dir.recursive", "true");
 	        //conf.set("file.pattern",".*pip.*");	
+		
 		Job job = new Job(conf);
 		job.setJarByClass(WordCount.class);
 		job.setJobName("wordcountJ1");

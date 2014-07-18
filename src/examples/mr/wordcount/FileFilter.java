@@ -11,6 +11,7 @@ import org.apache.hadoop.fs.FileSystem;
 import java.io.IOException;
 
 public class FileFilter extends Configured implements PathFilter {
+    
     Pattern pattern;
     Configuration conf;
     FileSystem fs;
