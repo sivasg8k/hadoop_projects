@@ -73,9 +73,12 @@ public class WordCount extends Configured implements Tool {
 	    job.setInputFormatClass(TextInputFormat.class);
 	    job.setOutputFormatClass(TextOutputFormat.class);
 	   
-	   
+	     //set input filter to process only certain types of files as input
+	    FileInputFormat.setInputPathFilter(job, FileFilter.class);
+	    
+	    
 	    FileInputFormat.setInputPaths(job, new Path(args[0]));
-		FileOutputFormat.setOutputPath(job, new Path(args[1]));
+	    FileOutputFormat.setOutputPath(job, new Path(args[1]));
 	   
 	    boolean success = job.waitForCompletion(true);
 	    return success ? 0: 1;
