@@ -1,4 +1,4 @@
-package examples.mr.wordcount;
+package com.hadoop.white.ch7.examples;
 
 import java.io.IOException;
 import java.util.StringTokenizer;
@@ -53,8 +53,13 @@ public class WordCount extends Configured implements Tool {
 		// TODO Auto-generated method stub
 		
 		Configuration conf = getConf();
+		
+		
+		//add if you have dirs inside dirs
 		//conf.set("mapred.input.dir.recursive", "true");
-	        //conf.set("file.pattern",".*pip.*");	
+		
+		//add if you want to apply filter for file types. ignore if you have provided from cmd line
+	    //conf.set("file.pattern",".*pip.*");	
 		
 		Job job = new Job(conf);
 		job.setJarByClass(WordCount.class);

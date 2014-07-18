@@ -1,4 +1,4 @@
-package examples.mr.wordcount;
+package com.hadoop.white.ch7.examples;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,0 +1,6 @@
+/target
+.classpath
+.project
+.settings
+src/ByteArrayStreamExample.java
+src/StringTest.java
