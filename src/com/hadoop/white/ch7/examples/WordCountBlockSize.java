@@ -57,6 +57,9 @@ public class WordCountBlockSize extends Configured implements Tool {
 		
 		conf.set("dfs.block.size", "128000");
 		
+		//block size should be smaller than min block size
+		conf.set("mapred.min.split.size","128100");
+		
 		Job job = new Job(conf);
 		job.setJarByClass(WordCountBlockSize.class);
 		job.setJobName("wordcountJ1");
