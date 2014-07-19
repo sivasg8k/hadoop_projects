@@ -60,6 +60,7 @@ public class WordCount extends Configured implements Tool {
 		
 		//add if you want to apply filter for file types. ignore if you have provided from cmd line
 	    //conf.set("file.pattern",".*pip.*");	
+		conf.set("mapred.input.pathFilter.class", "com.hadoop.white.ch7.examples.FileFilter");
 		
 		Job job = new Job(conf);
 		job.setJarByClass(WordCount.class);
@@ -80,7 +81,7 @@ public class WordCount extends Configured implements Tool {
 	    job.setOutputFormatClass(TextOutputFormat.class);
 	   
 	     //set input filter to process only certain types of files as input
-	    FileInputFormat.setInputPathFilter(job, FileFilter.class);
+	    //FileInputFormat.setInputPathFilter(job, FileFilter.class);
 	    
 	    
 	    FileInputFormat.setInputPaths(job, new Path(args[0]));
