@@ -55,7 +55,7 @@ public class WordCountBlockSize extends Configured implements Tool {
 		Configuration conf = getConf();
 		
 		
-		conf.set("dfs.block.size", "128000");
+		//conf.set("dfs.block.size", "128000");
 		
 		//block size should be smaller than min block size
 		//conf.set("dfs.namenode.fs-limits.min-block-size","128000");
