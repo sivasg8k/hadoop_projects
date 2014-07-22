@@ -18,7 +18,7 @@ import org.apache.hadoop.util.ToolRunner;
 
 public class SmallFilesToSeqFileConverterJob extends Configured implements Tool {
 	
-	static class SequenceFileMapper extends Mapper<NullWritable,BytesWritable,Text,BytesWritable> {
+	public static class SequenceFileMapper extends Mapper<NullWritable,BytesWritable,Text,BytesWritable> {
 		
 		private Text fileName;
 		
@@ -46,6 +46,9 @@ public class SmallFilesToSeqFileConverterJob extends Configured implements Tool 
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(BytesWritable.class);
 		job.setMapperClass(SequenceFileMapper.class);
+		job.setMapOutputKeyClass(Text.class);
+		job.setMapOutputValueClass(BytesWritable.class);
+		job.setNumReduceTasks(0);
 		
 		WholeFileFormat.setInputPaths(job, new Path(args[0]));
 		SequenceFileOutputFormat.setOutputPath(job, new Path(args[1]));
