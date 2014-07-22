@@ -47,6 +47,9 @@ public class SmallFilesToSeqFileConverterJob extends Configured implements Tool 
 		job.setOutputValueClass(BytesWritable.class);
 		job.setMapperClass(SequenceFileMapper.class);
 		
+		WholeFileFormat.setInputPaths(job, new Path(args[0]));
+		SequenceFileOutputFormat.setOutputPath(job, new Path(args[1]));
+		
 		return job.waitForCompletion(true) ? 0 : 1;
 	}
 	
