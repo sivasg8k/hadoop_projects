@@ -41,6 +41,9 @@ public class SmallFilesToSeqFileConverterJob extends Configured implements Tool 
 		Configuration conf = getConf();
 		Job job = new Job(conf);
 		
+		job.setJarByClass(SmallFilesToSeqFileConverterJob.class);
+		job.setJobName("smallfiles");
+		
 		job.setInputFormatClass(WholeFileFormat.class);
 		job.setOutputFormatClass(SequenceFileOutputFormat.class);
 		job.setOutputKeyClass(Text.class);
