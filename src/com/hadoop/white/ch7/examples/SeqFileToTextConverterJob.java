@@ -12,6 +12,7 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
@@ -48,7 +49,7 @@ public class SeqFileToTextConverterJob extends Configured implements Tool {
 		job.setJobName("seq2text");
 		
 		job.setInputFormatClass(SequenceFileInputFormat.class);
-		job.setOutputFormatClass(FileOutputFormat.class);
+		job.setOutputFormatClass(TextOutputFormat.class);
 		job.setOutputKeyClass(NullWritable.class);
 		job.setOutputValueClass(Text.class);
 		job.setMapperClass(TextMapper.class);
@@ -57,7 +58,7 @@ public class SeqFileToTextConverterJob extends Configured implements Tool {
 		job.setNumReduceTasks(0);
 		
 		SequenceFileInputFormat.setInputPaths(job, new Path(args[0]));
-		FileOutputFormat.setOutputPath(job, new Path(args[1]));
+		TextOutputFormat.setOutputPath(job, new Path(args[1]));
 		
 		return job.waitForCompletion(true) ? 0 : 1;
 		
