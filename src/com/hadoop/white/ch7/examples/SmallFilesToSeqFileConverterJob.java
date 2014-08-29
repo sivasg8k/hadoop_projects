@@ -11,6 +11,7 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.InputSplit;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
 import org.apache.hadoop.util.Tool;
@@ -51,7 +52,8 @@ public class SmallFilesToSeqFileConverterJob extends Configured implements Tool 
 		job.setMapperClass(SequenceFileMapper.class);
 		job.setMapOutputKeyClass(Text.class);
 		job.setMapOutputValueClass(BytesWritable.class);
-		job.setNumReduceTasks(0);
+		job.setReducerClass(Reducer.class);
+		//job.setNumReduceTasks(0);
 		
 		WholeFileFormat.setInputPaths(job, new Path(args[0]));
 		SequenceFileOutputFormat.setOutputPath(job, new Path(args[1]));
