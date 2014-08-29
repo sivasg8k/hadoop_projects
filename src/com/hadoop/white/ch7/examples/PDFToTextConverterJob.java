@@ -18,12 +18,12 @@ import org.apache.hadoop.util.ToolRunner;
 
 public class PDFToTextConverterJob extends Configured implements Tool {
 	
-	public static class PDFMapper extends Mapper<NullWritable,BytesWritable,NullWritable,Text> {
+	public static class PDFMapper extends Mapper<NullWritable,Text,NullWritable,Text> {
 		
 		
 		@Override
-		protected void map(NullWritable key, BytesWritable value, Context context) throws IOException, InterruptedException {
-			context.write(key, new Text(value.getBytes()));
+		protected void map(NullWritable key, Text value, Context context) throws IOException, InterruptedException {
+			context.write(key, value);
 		}
 		
 	}
@@ -47,7 +47,7 @@ public class PDFToTextConverterJob extends Configured implements Tool {
 		job.setJarByClass(PDFToTextConverterJob.class);
 		job.setJobName("pdf2text");
 		
-		job.setInputFormatClass(WholeFileFormat.class);
+		job.setInputFormatClass(PDFFileFormat.class);
 		job.setOutputFormatClass(TextOutputFormat.class);
 		job.setOutputKeyClass(NullWritable.class);
 		job.setOutputValueClass(Text.class);
@@ -56,7 +56,7 @@ public class PDFToTextConverterJob extends Configured implements Tool {
 		job.setMapOutputValueClass(Text.class);
 		job.setNumReduceTasks(0);
 		
-		WholeFileFormat.setInputPaths(job, new Path(args[0]));
+		PDFFileFormat.setInputPaths(job, new Path(args[0]));
 		TextOutputFormat.setOutputPath(job, new Path(args[1]));
 		
 		return job.waitForCompletion(true) ? 0 : 1;
