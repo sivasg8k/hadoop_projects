@@ -27,10 +27,13 @@ public class PDFWordCount extends Configured implements Tool {
         public void map (NullWritable key, Text value, Context context) throws IOException, InterruptedException {
             String line = value.toString();
             
-            StringTokenizer tokenizer = new StringTokenizer(line,"\n");
-            while(tokenizer.hasMoreTokens()) {
-                word.set(tokenizer.nextToken());
-                context.write(word, one);
+            StringTokenizer lineTokenizer = new StringTokenizer(line,"\n");
+            while(lineTokenizer.hasMoreTokens()) {
+            	StringTokenizer wordTokenizer = new StringTokenizer(lineTokenizer.nextToken()," ");
+            	while(wordTokenizer.hasMoreTokens()) {
+            		word.set(wordTokenizer.nextToken().trim());
+                    context.write(word, one);
+            	}
             }
         }
 	}
