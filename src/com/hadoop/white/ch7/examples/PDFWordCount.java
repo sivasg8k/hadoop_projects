@@ -26,6 +26,7 @@ public class PDFWordCount extends Configured implements Tool {
        
         public void map (NullWritable key, Text value, Context context) throws IOException, InterruptedException {
             String line = value.toString();
+            line = line.toLowerCase();
             
             StringTokenizer lineTokenizer = new StringTokenizer(line,"\n");
             while(lineTokenizer.hasMoreTokens()) {
