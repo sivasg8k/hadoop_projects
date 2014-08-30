@@ -22,6 +22,10 @@ public class PDFRecordReader extends RecordReader<NullWritable, Text> {
 	private Configuration conf = null;
 	private boolean processed = false;
 	private Text value = new Text();
+	private int numPages = 0;
+	private int curPage = 1;
+	private PdfReader reader =null;
+	
 
 	@Override
 	public void initialize(InputSplit split, TaskAttemptContext context)
@@ -29,36 +33,35 @@ public class PDFRecordReader extends RecordReader<NullWritable, Text> {
 		
 		this.fileSplit = (FileSplit)split;
 		this.conf = context.getConfiguration();
+		Path file = fileSplit.getPath();
 		
+		FileSystem fs = file.getFileSystem(conf);
+		
+		FSDataInputStream in = fs.open(file);
+		this.reader = new PdfReader(in);
+		numPages = reader.getNumberOfPages();
 	}
 
 	@Override
 	public boolean nextKeyValue() throws IOException, InterruptedException {
 		if (!processed) {
 			
-			StringBuffer sb = new StringBuffer();
+			String page = null;
 			
-			Path file = fileSplit.getPath();
-			
-			FileSystem fs = file.getFileSystem(conf);
-			FSDataInputStream in = null;
-			PdfReader reader = null;
 			try {
-				
-				in = fs.open(file);
-				reader = new PdfReader(in);
-				int numPages = reader.getNumberOfPages();
-				
-				for(int i=1;i<=numPages;i++) {
-		        	String page = PdfTextExtractor.getTextFromPage(reader, i);
-		        	sb.append(page);
-		        }
-			
+				  
+				   page = PdfTextExtractor.getTextFromPage(reader, curPage);
+		    
 			} catch(Exception e) {
 				
 			}
-			value.set(sb.toString());
-			processed = true;
+			value.set(page);
+			if(curPage == numPages) {
+				processed = true;
+			} else {
+				curPage++;
+			}
+			
 			return true;
 		}
 		return false;
