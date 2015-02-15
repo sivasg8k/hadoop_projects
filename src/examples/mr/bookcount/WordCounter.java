@@ -69,7 +69,7 @@ public class WordCounter extends Configured implements Tool {
 	   
 	   
 	    TextInputFormat.setInputPaths(job, new Path(args[0]));
-	    FileOutputFormat.setOutputPath(job, new Path(args[1]));
+	    TextOutputFormat.setOutputPath(job, new Path(args[1]));
 	   
 	    boolean success = job.waitForCompletion(true);
 	    return success ? 0: 1;
