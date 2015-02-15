@@ -1,8 +1,6 @@
 package examples.mr.bookcount;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.StringTokenizer;
 
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
@@ -12,7 +10,6 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
-import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
@@ -68,7 +65,7 @@ public class WordCounter extends Configured implements Tool {
 	    
 	   
 	    job.setInputFormatClass(TextInputFormat.class);
-	    job.setOutputFormatClass(FileOutputFormat.class);
+	    job.setOutputFormatClass(TextOutputFormat.class);
 	   
 	   
 	    TextInputFormat.setInputPaths(job, new Path(args[0]));
