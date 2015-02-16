@@ -2,6 +2,7 @@ package examples.mr.bookcount;
 
 import java.io.IOException;
 
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
@@ -28,10 +29,11 @@ public class WordCounter extends Configured implements Tool {
         	String line = value.toString();
         	
         	String[] inp = line.split(" ");
-        	inp[3] = inp[3].trim();
-        	word.set(inp[3]);
-        	context.write(word, one);
-            
+        	int len = inp.length;
+        	for(int i=0;i<len;i++) {
+        		word.set(inp[i]);
+            	context.write(word, one);
+        	}
         }
 	}
    
@@ -48,8 +50,14 @@ public class WordCounter extends Configured implements Tool {
     }
 	
 	public int run(String[] args) throws Exception {
-		// TODO Auto-generated method stub
-		Job job = new Job(getConf());
+		
+		
+		Configuration conf = getConf();
+		
+		conf.set("mapreduce.map.output.compress", "true");
+		conf.set("mapreduce.map.output.compress.codec", "org.apache.hadoop.io.compress.BZip2Codec");
+		
+		Job job = new Job(conf);
 		job.setJarByClass(WordCounter.class);
 		job.setJobName("word frequency");
 	   
@@ -68,8 +76,8 @@ public class WordCounter extends Configured implements Tool {
 	    job.setOutputFormatClass(TextOutputFormat.class);
 	   
 	   
-	    TextInputFormat.setInputPaths(job, new Path(args[0]));
-	    TextOutputFormat.setOutputPath(job, new Path(args[1]));
+	    TextInputFormat.setInputPaths(job, new Path(args[1]));
+	    TextOutputFormat.setOutputPath(job, new Path(args[3]));
 	   
 	    boolean success = job.waitForCompletion(true);
 	    return success ? 0: 1;
