@@ -4,3 +4,4 @@
 .settings
 src/ByteArrayStreamExample.java
 src/StringTest.java
+bin/
