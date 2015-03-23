@@ -41,5 +41,10 @@ public class TestArithmeticOps {
 	public void testDivide() {
 		assertEquals(2,arithOps.divide(6, 3));
 	}
+	
+	@Test
+	public void testExp() {
+		assertEquals(new Double(4.0),new Double(arithOps.exp(2, 2)));
+	}
 
 }

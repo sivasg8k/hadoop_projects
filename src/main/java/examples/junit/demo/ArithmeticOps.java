@@ -18,4 +18,8 @@ public class ArithmeticOps {
 		return (a/b);
 	}
 	
+	public double exp(int a, int b) {
+		return (Math.pow(a, b));
+	}
+	
 }
