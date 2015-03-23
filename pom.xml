@@ -5,7 +5,7 @@
 	<artifactId>MRSamples</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<build>
-		<sourceDirectory>src</sourceDirectory>
+		<sourceDirectory>src/main/java</sourceDirectory>
 		<plugins>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
@@ -19,6 +19,11 @@
 					</descriptorRefs>
 				</configuration>
 			</plugin>
+			<plugin>
+		          <groupId>org.apache.maven.plugins</groupId>
+		          <artifactId>maven-checkstyle-plugin</artifactId>
+		          <version>2.9.1</version>
+        	</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
